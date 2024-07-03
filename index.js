@@ -70,7 +70,7 @@ app.post('/books/', (request, response) => {
     onlineStores,
   } = bookDetails
 
-  const putQuery = `
+  const postQuery = `
     INSERT INTO
       book (title,author_id,rating,rating_count,review_count,description,pages,date_of_publication,edition_language,price,online_stores)
     VALUES
@@ -87,8 +87,10 @@ app.post('/books/', (request, response) => {
          ${price},
         '${onlineStores}'
       );`
-  let dbResponse = db.run(putQuery);
-  let primaryKey = dbResponse.lastID ;
+  let dbResponse = db.run(postQuery);
+  let primaryKey = dbResponse.lastID;
   console.log(dbResponse);
-  response.send({bookId : primaryKey});
+  response.send({bookId: primaryKey});
 })
+
+
