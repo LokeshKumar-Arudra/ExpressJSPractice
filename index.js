@@ -87,10 +87,8 @@ app.post('/books/', (request, response) => {
          ${price},
         '${onlineStores}'
       );`
-  let dbResponse = db.run(postQuery);
-  let primaryKey = dbResponse.lastID;
-  console.log(dbResponse);
-  response.send({bookId: primaryKey});
+  let dbResponse = db.run(postQuery)
+  let primaryKey = dbResponse.lastID
+  console.log({bookId: primaryKey});
+  response.send({bookId: primaryKey})
 })
-
-
