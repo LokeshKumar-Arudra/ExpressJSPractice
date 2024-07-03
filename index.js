@@ -53,7 +53,7 @@ app.get('/books/:bookId/', async (request, response) => {
 
 //Add Book
 
-app.post('/books/', (request, response) => {
+app.post('/books/', async (request, response) => {
   let bookDetails = request.body
   //console.log('Request Body', bookDetails)
   const {
@@ -87,8 +87,15 @@ app.post('/books/', (request, response) => {
          ${price},
         '${onlineStores}'
       );`
-  let dbResponse = db.run(postQuery)
+  let dbResponse = await db.run(postQuery)
   let primaryKey = dbResponse.lastID
-  console.log({bookId: primaryKey});
+  console.log({bookId: primaryKey})
   response.send({bookId: primaryKey})
+})
+
+// Update Book API
+app.put('/books/:bookId/', (request, reponse) => {
+  let {bookId} = request.params
+  let bookDetails = request.body
+
 })
