@@ -94,8 +94,70 @@ app.post('/books/', async (request, response) => {
 })
 
 // Update Book API
-app.put('/books/:bookId/', (request, reponse) => {
+app.put('/books/:bookId/', async (request, response) => {
   let {bookId} = request.params
   let bookDetails = request.body
+  let {
+    title,
+    authorId,
+    rating,
+    ratingCount,
+    reviewCount,
+    description,
+    pages,
+    dateOfPublication,
+    editionLanguage,
+    price,
+    onlineStores,
+  } = bookDetails
 
+  const updateBookQuery = `
+    UPDATE
+      book
+    SET
+      title='${title}',
+      author_id=${authorId},
+      rating=${rating},
+      rating_count=${ratingCount},
+      review_count=${reviewCount},
+      description='${description}',
+      pages=${pages},
+      date_of_publication='${dateOfPublication}',
+      edition_language='${editionLanguage}',
+      price= ${price},
+      online_stores='${onlineStores}'
+    WHERE
+      book_id = ${bookId};`
+  let dbResponse = await db.run(updateBookQuery)
+  response.send('Book Updated Successfully')
 })
+
+//Delete a book
+
+app.delete('/books/:bookId/', async (request, response) => {
+  let {bookId} = request.params
+  let bookDetails = request.body
+  let {
+    title,
+    authorId,
+    rating,
+    ratingCount,
+    reviewCount,
+    description,
+    pages,
+    dateOfPublication,
+    editionLanguage,
+    price,
+    onlineStores,
+  } = bookDetails
+
+  let deleteBookQuery = `
+    DELETE FROM
+        book
+    WHERE
+        book_id = ${bookId};` //`DELETE  FROM book WHERE book_id = ${bookId};`
+
+  let dbResponseDelete = await db.run(deleteBookQuery)
+  response.send('Book deleted Successfully')
+  //console.log('book deleted');
+});
